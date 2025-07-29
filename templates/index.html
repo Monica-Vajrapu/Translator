@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Language Translator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌐 Language Translator</h1>
+
+    <textarea id="text-input" placeholder="Enter text to translate..."></textarea><br>
+
+    <!-- 🎤 Voice Input Button -->
+    <button onclick="startListening()">🎤 Speak</button>
+
+    <br><br>
+
+   <label>From:</label>
+<select id="source-lang">
+  <option value="en">English</option>
+  <option value="hi">Hindi</option>
+  <option value="te">Telugu</option>
+  <option value="ta">Tamil</option>
+  <option value="kn">Kannada</option>
+  <option value="ml">Malayalam</option>
+  <option value="gu">Gujarati</option>
+  <option value="mr">Marathi</option>
+  <option value="pa">Punjabi</option>
+  <option value="bn">Bengali</option>
+  <option value="or">Odia</option>
+  <option value="ur">Urdu</option>
+</select>
+
+<label>To:</label>
+<select id="target-lang">
+  <option value="hi">Hindi</option>
+  <option value="en">English</option>
+  <option value="te">Telugu</option>
+  <option value="ta">Tamil</option>
+  <option value="kn">Kannada</option>
+  <option value="ml">Malayalam</option>
+  <option value="gu">Gujarati</option>
+  <option value="mr">Marathi</option>
+  <option value="pa">Punjabi</option>
+  <option value="bn">Bengali</option>
+  <option value="or">Odia</option>
+  <option value="ur">Urdu</option>
+</select>
+
+    <br><br>
+    <button onclick="translateText()">Translate</button>
+
+    <h2>Your Translated Text:</h2>
+    <p id="translated-output">--</p>
+  </div>
+
+  <script>
+    // Voice Recognition Logic
+    function startListening() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition not supported in this browser.");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = document.getElementById("source-lang").value + "-IN"; // Language code
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = function(event) {
+        const spokenText = event.results[0][0].transcript;
+        document.getElementById("text-input").value = spokenText;
+      };
+
+      recognition.onerror = function(event) {
+        alert("Speech Recognition Error: " + event.error);
+      };
+
+      recognition.start();
+    }
+
+    // Translate Logic
+    async function translateText() {
+      const text = document.getElementById("text-input").value.trim();
+      const source = document.getElementById("source-lang").value;
+      const target = document.getElementById("target-lang").value;
+      const output = document.getElementById("translated-output");
+
+      if (text === "") {
+        output.innerText = "⚠️ Please enter some text.";
+        return;
+      }
+
+      output.innerText = "Translating...";
+
+      try {
+        const response = await fetch('/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, source, target })
+        });
+
+        const result = await response.json();
+        output.innerText = result.translated || "❌ Error in translation.";
+      } catch (err) {
+        output.innerText = "❌ " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
