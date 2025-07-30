@@ -9,31 +9,40 @@
   <div class="container">
     <img src="/static/chatbot.jpeg" alt="AI Bot" class="bot-image"><br>
 
-    <!-- 🔇 Speaker Toggle -->
     <button id="speaker-btn" onclick="toggleSpeaker()" title="Toggle Speech">🔇</button>
 
     <h1>🌐 Language Translator</h1>
 
     <textarea id="text-input" placeholder="Enter text to translate..."></textarea><br>
 
-    <!-- 🎤 Voice Input Button -->
     <button onclick="startListening()" title="Speak using microphone">🎤 Speak</button><br><br>
+
+    <!-- Transliteration toggle -->
+    <label>
+      <input type="checkbox" id="enable-transliteration">
+      Enable Transliteration (for Indian scripts)
+    </label><br><br>
 
     <!-- Language Selectors -->
     <label>From:</label>
     <select id="source-lang">
-      <!-- Indian Languages -->
       <option value="en">English</option>
+      <option value="as">Assamese</option>
+      <option value="bn">Bengali</option>
+      <option value="gu">Gujarati</option>
       <option value="hi">Hindi</option>
-      <option value="te">Telugu</option>
-      <option value="ta">Tamil</option>
       <option value="kn">Kannada</option>
       <option value="ml">Malayalam</option>
       <option value="mr">Marathi</option>
-      <option value="bn">Bengali</option>
-      
+      <option value="ne">Nepali</option>
+      <option value="or">Odia</option>
+      <option value="pa">Punjabi</option>
+      <option value="sa">Sanskrit</option>
+      <option value="ta">Tamil</option>
+      <option value="te">Telugu</option>
+      <option value="ur">Urdu</option>
 
-      <!-- Foreign Languages -->
+      <!-- Foreign -->
       <option value="fr">French</option>
       <option value="es">Spanish</option>
       <option value="de">German</option>
@@ -56,18 +65,23 @@
 
     <label>To:</label>
     <select id="target-lang">
-      <!-- Indian Languages -->
-      <option value="hi">Hindi</option>
       <option value="en">English</option>
-      <option value="te">Telugu</option>
-      <option value="ta">Tamil</option>
+      <option value="as">Assamese</option>
+      <option value="bn">Bengali</option>
+      <option value="gu">Gujarati</option>
+      <option value="hi">Hindi</option>
       <option value="kn">Kannada</option>
       <option value="ml">Malayalam</option>
       <option value="mr">Marathi</option>
-      <option value="bn">Bengali</option>
-     
+      <option value="ne">Nepali</option>
+      <option value="or">Odia</option>
+      <option value="pa">Punjabi</option>
+      <option value="sa">Sanskrit</option>
+      <option value="ta">Tamil</option>
+      <option value="te">Telugu</option>
+      <option value="ur">Urdu</option>
 
-      <!-- Foreign Languages -->
+      <!-- Foreign -->
       <option value="fr">French</option>
       <option value="es">Spanish</option>
       <option value="de">German</option>
@@ -100,7 +114,7 @@
 
   <script>
     let isMuted = true;
-    const unsupportedSpeechLangs = ['pa', 'gu', 'or']; // Extend as needed
+    const unsupportedSpeechLangs = ['pa', 'gu', 'or'];
 
     function toggleSpeaker() {
       isMuted = !isMuted;
@@ -148,6 +162,7 @@
       const text = document.getElementById("text-input").value.trim();
       const source = document.getElementById("source-lang").value;
       const target = document.getElementById("target-lang").value;
+      const transliterate = document.getElementById("enable-transliteration").checked;
       const translatedOutput = document.getElementById("translated-output");
 
       if (text === "") {
@@ -161,7 +176,7 @@
         const response = await fetch('/translate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text, source, target })
+          body: JSON.stringify({ text, source, target, transliterate })
         });
 
         const result = await response.json();
