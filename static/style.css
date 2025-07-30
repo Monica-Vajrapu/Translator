@@ -1,4 +1,4 @@
-/* Animated gradient background */
+/* Base reset */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -9,7 +9,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 30px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 @keyframes gradient {
@@ -24,56 +25,50 @@ body {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-radius: 20px;
-  padding: 25px;
+  padding: 20px;
   width: 100%;
   max-width: 680px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   text-align: center;
   color: #fff;
-}
-.bot-image {
-  width: 120px;
-  animation: floatBot 4s ease-in-out infinite;
+  box-sizing: border-box;
 }
 
-/* Define the animation */
+.bot-image {
+  width: 100px;
+  animation: floatBot 4s ease-in-out infinite;
+  margin-bottom: 15px;
+}
+
 @keyframes floatBot {
-  0% {
-    transform: translateY(0px);
-    opacity: 0.95;
-  }
-  50% {
-    transform: translateY(-10px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0px);
-    opacity: 0.95;
-  }
+  0% { transform: translateY(0px); opacity: 0.95; }
+  50% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(0px); opacity: 0.95; }
 }
 
 /* Header */
 h1 {
   margin-bottom: 20px;
-  font-size: 32px;
+  font-size: 2rem;
   color: #fff;
 }
 
-/* Textarea styling */
+/* Textarea */
 textarea {
   width: 100%;
   height: 110px;
   padding: 12px;
-  font-size: 16px;
+  font-size: 1rem;
   border: none;
   border-radius: 10px;
   margin-bottom: 15px;
   resize: none;
   background: #ffffffc2;
   color: #000;
+  box-sizing: border-box;
 }
 
-/* Labels and selects */
+/* Labels & Select */
 label {
   font-weight: bold;
   margin-right: 5px;
@@ -86,23 +81,27 @@ select {
   padding: 10px;
   border-radius: 10px;
   border: none;
-  font-size: 15px;
+  font-size: 0.95rem;
   background: #ffffffd9;
   margin: 8px 5px;
+  width: 100%;
+  max-width: 250px;
 }
 
-/* Button styling */
+/* Button */
 button {
   padding: 12px 24px;
   background-color: #ffffff;
   color: #4facfe;
   border: none;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   margin-top: 12px;
   transition: transform 0.2s ease, background-color 0.3s;
+  width: 100%;
+  max-width: 220px;
 }
 
 button:hover {
@@ -110,24 +109,23 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Output heading */
+/* Output section */
 h2 {
   color: #0da2e8;
   margin-top: 25px;
 }
 
-/* Translated output */
 #translated-output {
   background-color: #ffffffc5;
   padding: 15px;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 1.1rem;
   color: #000;
   margin-top: 10px;
   word-wrap: break-word;
 }
 
-/* Voice mic button */
+/* Floating mic */
 #voice-btn {
   position: fixed;
   bottom: 25px;
@@ -147,19 +145,24 @@ h2 {
   transform: scale(1.1);
 }
 
-/* Responsive Design */
-@media screen and (max-width: 600px) {
+/* Responsive */
+@media screen and (max-width: 768px) {
   h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 15px;
   }
 
   textarea {
     height: 90px;
+    font-size: 1rem;
   }
 
   button, select {
     width: 100%;
-    margin-top: 10px;
+    font-size: 0.95rem;
   }
 
   #voice-btn {
@@ -169,6 +172,7 @@ h2 {
   }
 }
 
+/* Output Card */
 .card-output {
   background-color: #ffffffdd;
   padding: 20px;
@@ -179,7 +183,7 @@ h2 {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  color:#e92fca;
+  color: #e92fca;
 }
 
 .output-box {
@@ -191,8 +195,13 @@ h2 {
   font-weight: 500;
   color: #1a1a1a;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ccc;
+  min-height: 40px;
 }
 
+.gray {
+  color: gray;
+}
 
 #speaker-btn {
   margin-left: 10px;
@@ -201,19 +210,3 @@ h2 {
 #speaker-btn:hover img {
   opacity: 0.7;
 }
-
- .output-box {
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 6px;
-      background-color: #f9f9f9;
-      font-size: 16px;
-      min-height: 40px;
-    }
-    .gray {
-      color: gray;
-    }
-    .bot-image {
-      width: 100px;
-      margin-bottom: 10px;
-    }
